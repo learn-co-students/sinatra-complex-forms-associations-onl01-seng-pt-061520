@@ -34,12 +34,12 @@ class PetsController < ApplicationController
 
   patch '/pets/:id' do 
     @pet = Pet.find(params[:id])
-    @pet.name = params["pet_name"]
+    @pet.update(params[:pet])
+
     if !params["owner"]["name"].empty?
       @pet.owner = Owner.create(name: params["owner"]["name"])
-    else 
-      @pet.owner_id = params["owner"]["owner_id"]
     end
+  
     @pet.save
 
     redirect to "pets/#{@pet.id}"
